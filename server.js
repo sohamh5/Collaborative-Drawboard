@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
@@ -13,15 +14,16 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('drawing', data);
   });
 
-  socket.on('chatMessage', (msg) => {
-    socket.broadcast.emit('chatMessage', msg);
-  });
+socket.on('chatMessage', (msg) => {
+  io.emit('chatMessage', msg); 
+});
 
   socket.on('disconnect', () => {
     console.log('A user disconnected');
   });
 });
 
-http.listen(3000, () => {
-  console.log('Server listening on http://localhost:3000');
+const PORT = process.env.PORT || 3000;
+http.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });

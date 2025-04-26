@@ -96,7 +96,7 @@
 
   <canvas id="canvas"></canvas>
 
-  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
   <script>
     let username = '';
 while (!username) {
@@ -106,23 +106,23 @@ while (!username) {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
-    
+    // Resize canvas with correct devicePixelRatio scaling
     function resizeCanvas() {
       const ratio = window.devicePixelRatio || 1;
       const topOffset = document.querySelector('h1').offsetHeight;
       const width = window.innerWidth;
       const height = window.innerHeight - topOffset;
 
-      
+      // Set CSS size
       canvas.style.width = width + 'px';
       canvas.style.height = height + 'px';
       canvas.style.top = `${topOffset}px`;
 
-      
+      // Set actual drawing size
       canvas.width = width * ratio;
       canvas.height = height * ratio;
 
-     
+      // Scale drawing context
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(ratio, ratio);
     }
